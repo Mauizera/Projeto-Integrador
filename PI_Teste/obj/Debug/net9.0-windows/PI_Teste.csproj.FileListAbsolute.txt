@@ -1,0 +1,5 @@
+C:\Users\Lenovo\Documents\csharp\PI_Teste\obj\Debug\net9.0-windows\PI_Teste.csproj.AssemblyReference.cache
+C:\Users\Lenovo\Documents\csharp\PI_Teste\obj\Debug\net9.0-windows\PI_Teste.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Lenovo\Documents\csharp\PI_Teste\obj\Debug\net9.0-windows\PI_Teste.AssemblyInfoInputs.cache
+C:\Users\Lenovo\Documents\csharp\PI_Teste\obj\Debug\net9.0-windows\PI_Teste.AssemblyInfo.cs
+C:\Users\Lenovo\Documents\csharp\PI_Teste\obj\Debug\net9.0-windows\PI_Teste.csproj.CoreCompileInputs.cache
