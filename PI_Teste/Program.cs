@@ -4,6 +4,6 @@ static class Program
 {
     static void Main()
     {
-        Application.Run(new ViewPessoa());
+        Application.Run(new ViewAdmin());
     }    
 }

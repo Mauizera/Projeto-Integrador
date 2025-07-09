@@ -6,7 +6,7 @@ namespace Repository;
 public class RepositoryPessoa
 {
     
-    static List<Pessoa> pessoas = [];
+    static List<User> users = [];
     private static MySqlConnection conexao;
     private static void StartConexao()
     {
@@ -26,7 +26,7 @@ public class RepositoryPessoa
         conexao.Close();
     }
 
-    public static List<Pessoa> Sincronizar()
+    public static List<User> Sincronizar()
     {
         StartConexao();
         string query = "SELECT * FROM pessoas";
@@ -34,35 +34,39 @@ public class RepositoryPessoa
         MySqlDataReader reader = command.ExecuteReader();
         while (reader.Read())
         {
-            Pessoa pessoa = new Pessoa();
+            User pessoa = new User();
             pessoa.Id = Convert.ToInt32(reader["id"].ToString);
             pessoa.Nome = reader["nome"].ToString();
-            pessoa.Idade = Convert.ToInt32(reader["idade"].ToString);
+            pessoa.Senha = reader["senha"].ToString();
+            pessoa.Email = reader["emial"].ToString();
+            pessoa.Permissao = Convert.ToInt32(reader["permissao"].ToString);
 
-            pessoas.Add(pessoa);
+            users.Add(pessoa);
         }
 
         EndConexao();
-        return pessoas;
+        return users;
     }
-    public static void Criar(Pessoa pessoa)
+    public static void Criar(User pessoa)
     {
-        pessoas.Add(pessoa);
-    }
-
-    public static List<Pessoa> Listar()
-    {
-        return pessoas;
+        users.Add(pessoa);
     }
 
-    public static void Alternar(int id, string nome, int idade)
+    public static List<User> Listar()
     {
-        pessoas[id].Nome = nome;
-        pessoas[id].Idade = idade;
+        return users;
+    }
+
+    public static void Alternar(int id, string nome, string senha, string email, int permissao)
+    {
+        users[id].Nome = nome;
+        users[id].Senha = senha;
+        users[id].Email = email;
+        users[id].Permissao = permissao;
     }
 
     public static void Deletar(int id)
     {
-        pessoas.RemoveAt(id);
+        users.RemoveAt(id);
     }
 }

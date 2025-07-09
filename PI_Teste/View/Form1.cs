@@ -3,18 +3,22 @@ using model;
 
 namespace PI_Teste;
 
-public partial class ViewPessoa : Form 
+public partial class ViewAdmin : Form 
 {
     private readonly Label Lbllogin;
     private readonly Label LblSenha;
+    private readonly Label LblEmail;
+    private readonly ComboBox comboBox;
+    private readonly TextBox InptEmail;
     private readonly TextBox InptLogin;
     private readonly TextBox InptSenha;
     private readonly Button BttnLogar;
     private readonly Button BttnAlterar;
     private readonly Button BttnDeletar;
     private readonly DataGridView DgvAlunos;
-
-    public ViewPessoa()
+    
+   
+    public ViewAdmin()
     {
         ControllerPessoa.Sincronizar();
 
@@ -32,21 +36,41 @@ public partial class ViewPessoa : Form
             Text = "Senha: ",
             Location = new Point(100, 100),
 
+        }; LblEmail = new Label
+        {
+            Text = "Email: ",
+            Location = new Point(150, 150),
+
         };
 
         InptLogin = new TextBox
         {
             Text = " ",
             Location = new Point(50, 100),
-            Size = new Size(150, 100)
+            Size = new Size(200, 100)
         };
 
         InptSenha = new TextBox
         {
             Text = " ",
             Location = new Point(150, 100),
+            Size = new Size(250, 100)
+        };
+        InptEmail = new TextBox
+        {
+            Text = " ",
+            Location = new Point(250, 100),
             Size = new Size(200, 100)
         };
+        comboBox = new ComboBox
+        {
+            Text = "Selecione o nível de acesso do usuário",
+            Location = new Point(300, 300),
+            Size = new Size(350, 350),
+
+        };  comboBox.Items.Add("1 - Aluno");
+            comboBox.Items.Add("2 - Professor");
+            comboBox.SelectedIndex = 99;
 
         BttnLogar = new Button
         {
@@ -69,8 +93,11 @@ public partial class ViewPessoa : Form
 
         Controls.Add(Lbllogin);
         Controls.Add(LblSenha);
+        Controls.Add(LblEmail);
+        Controls.Add(InptEmail);
         Controls.Add(InptLogin);
         Controls.Add(InptSenha);
+        Controls.Add(comboBox);
         Controls.Add(BttnLogar);
         Controls.Add(BttnAlterar);
         Controls.Add(BttnDeletar);
@@ -79,7 +106,7 @@ public partial class ViewPessoa : Form
     }
     private void Listar()
     {
-        List<Pessoa> pessoas = ControllerPessoa.Listar();
+        List<User> pessoas = ControllerPessoa.Listar();
         DgvAlunos.DataSource = pessoas;
         DgvAlunos.AutoGenerateColumns = false;
         DgvAlunos.Columns.Clear();
@@ -92,8 +119,8 @@ public partial class ViewPessoa : Form
 
         DgvAlunos.Columns.Add(new DataGridViewTextBoxColumn
         {
-            DataPropertyName = "Idade",
-            HeaderText = "Idade",
+            DataPropertyName = "Senha",
+            HeaderText = "Senha",
         });
     }
 
@@ -109,8 +136,19 @@ public partial class ViewPessoa : Form
             MessageBox.Show("Preencha a sua senha");
             return;
         }
-        MessageBox.Show("Aluno Cadastrado com sucesso!");
-        ControllerPessoa.Criar(InptLogin.Text, Convert.ToInt32(InptSenha.Text));
+        else if (InptEmail.Text.Length < 1)
+        {
+            MessageBox.Show("Preencha o seu email");
+            return;
+        }
+        else if (comboBox.SelectedIndex < 1 || comboBox.SelectedIndex > 2)
+        {
+            MessageBox.Show("Preencha o nível de acesso");
+            return;
+        }
+
+        MessageBox.Show("Usuário Cadastrado com sucesso!");
+        ControllerPessoa.Criar(InptLogin.Text, InptSenha.Text, InptEmail.Text, Convert.ToInt32(comboBox.Text));
         Listar();
     }
 
@@ -128,9 +166,20 @@ public partial class ViewPessoa : Form
             MessageBox.Show("Preencha a sua senha novamente");
             return;
         }
+        else if (InptEmail.Text.Length < 1)
+        {
+            MessageBox.Show("Preencha o seu email");
+            return;
+        }
+        else if (comboBox.SelectedIndex < 1 || comboBox.SelectedIndex > 2)
+        {
+            MessageBox.Show("Preencha o nível de acesso");
+            return;
+        }
+        
         MessageBox.Show("Dados alterados com sucesso!");
 
-        ControllerPessoa.Alternar(Id, InptLogin.Text, Convert.ToInt32(InptSenha.Text));
+        ControllerPessoa.Alternar(Id, InptLogin.Text, InptSenha.Text, InptEmail.Text, Convert.ToInt32(comboBox.Text));
         Listar();
     }
 

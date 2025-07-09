@@ -9,19 +9,19 @@ public class ControllerPessoa
     {
         RepositoryPessoa.Sincronizar();
     }
-    public static void Criar(string nome, int idade)
+    public static void Criar(string nome, string senha, string email, int permissao)
     {
-        new Pessoa(nome, idade);
+        new User(nome, senha, email, permissao);
     }
 
-    public static List<Pessoa> Listar()
+    public static List<User> Listar()
     {
         return RepositoryPessoa.Listar();
     }
 
-    public static void Alternar(int id, string nome, int idade)
+    public static void Alternar(int id, string nome, string senha, string email, int permissao)
     {
-        RepositoryPessoa.Alternar(id, nome, idade);
+        RepositoryPessoa.Alternar(id, nome, senha, email, permissao);
     }
 
     public static void Deletar(int id)
